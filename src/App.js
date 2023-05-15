@@ -6,23 +6,42 @@ import {
   TextField,
   Box,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import { useForm } from "react-hook-form";
 import MyDatePicker from "./components/MyDatePicker";
+import MyPost from "./components/MyPost";
+
 
 function App() {
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, register, reset, formState: {isSubmitSuccessful} } = useForm({
     defaultValues: {
       start: null,
       firstDeadline: null,
       lastDeadline: null,
+      name: "",
     },
   });
-  const onSubmit = (data) => console.log(data);
 
-  const [name, setName] = useState("");
+  const [posts, setPosts] = useState([]);
+
+  const onSubmit = ({ start, firstDeadline, lastDeadline, name}) => {
+    console.log(start);
+    setPosts([
+      ...posts,
+      {
+        name: name,
+        start: start.toLocaleString(),
+        firstDeadline: firstDeadline.toLocaleString(),
+        lastDeadline: lastDeadline?.toLocaleString(),
+      },
+    ])
+  };
+
+  useEffect(() => {
+    reset()
+  }, [isSubmitSuccessful, reset])
 
   return (
     <div className="App">
@@ -37,11 +56,9 @@ function App() {
               <TextField
                 variant="standard"
                 label="Tracking name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
                 sx={{ marginBottom: 3 }}
+                {...register("name")}
               ></TextField>
-              <Typography>{name}</Typography>
 
               <Stack direction="row" justifyContent="space-between" spacing={3}>
                 <MyDatePicker
@@ -84,10 +101,22 @@ function App() {
                 />
               </Stack>
               <Button variant="contained" type="submit" sx={{ marginBlock: 3 }}>
-                {" "}
-                Submit{" "}
+                Submit
               </Button>
             </form>
+          </Box>
+          <Box mt={3}>
+            {posts.map(({name, start, firstDeadline, lastDeadline}) => {
+              return (
+                <MyPost
+                  name={name}
+                  start={start}
+                  firstDeadline={firstDeadline}
+                  lastDeadline={lastDeadline}
+                  key={name + start + firstDeadline}
+                ></MyPost>
+              );
+            })}
           </Box>
         </Container>
       </LocalizationProvider>
