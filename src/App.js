@@ -11,7 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import { useForm } from "react-hook-form";
 import MyDatePicker from "./components/MyDatePicker";
-import MyPost from "./components/MyPost";
+import MyProgressBar from "./components/MyProgressBar";
 
 
 function App() {
@@ -27,26 +27,32 @@ function App() {
   const [posts, setPosts] = useState([]);
 
   const onSubmit = ({ start, firstDeadline, lastDeadline, name}) => {
-    console.log(start);
     setPosts([
       ...posts,
       {
-        name: name,
-        start: start.toLocaleString(),
-        firstDeadline: firstDeadline.toLocaleString(),
-        lastDeadline: lastDeadline?.toLocaleString(),
+        name,
+        start,
+        firstDeadline,
+        lastDeadline
       },
     ])
   };
 
   useEffect(() => {
     reset()
-  }, [isSubmitSuccessful, reset])
+  }, [isSubmitSuccessful, reset]);
+
+  const removePost = (name) => {
+    setPosts(posts.filter(p => p.name !== name))
+  }
+  const sortPosts = () => {
+    setPosts([...posts].sort((a,b) => a.start.ts - b.start.ts))
+  }
 
   return (
     <div className="App">
       <LocalizationProvider dateAdapter={AdapterLuxon}>
-        <Container maxWidth="md">
+        <Container maxWidth='md'>
           <Box mt={3}>
             <Typography variant="h4" align="center" mb={3}>
               Term tracker
@@ -57,7 +63,9 @@ function App() {
                 variant="standard"
                 label="Tracking name"
                 sx={{ marginBottom: 3 }}
-                {...register("name")}
+                {...register("name", {
+                  required: 'This field is required'
+                })}
               ></TextField>
 
               <Stack direction="row" justifyContent="space-between" spacing={3}>
@@ -105,19 +113,25 @@ function App() {
               </Button>
             </form>
           </Box>
-          <Box mt={3}>
+          <Box>
             {posts.map(({name, start, firstDeadline, lastDeadline}) => {
               return (
-                <MyPost
+                <MyProgressBar
                   name={name}
                   start={start}
                   firstDeadline={firstDeadline}
                   lastDeadline={lastDeadline}
                   key={name + start + firstDeadline}
-                ></MyPost>
+                  remove={removePost}
+                ></MyProgressBar>
               );
             })}
           </Box>
+          { posts.length > 1
+            ? <Button variant="contained" sx={{marginTop: 3}} onClick={sortPosts}>Sort by start date</Button>
+            : undefined
+          }
+          
         </Container>
       </LocalizationProvider>
     </div>
