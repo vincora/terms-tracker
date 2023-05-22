@@ -13,9 +13,14 @@ import { useForm } from "react-hook-form";
 import MyDatePicker from "./components/MyDatePicker";
 import MyProgressBar from "./components/MyProgressBar";
 
-
 function App() {
-  const { handleSubmit, control, register, reset, formState: {isSubmitSuccessful} } = useForm({
+  const {
+    handleSubmit,
+    control,
+    register,
+    reset,
+    formState: { isSubmitSuccessful },
+  } = useForm({
     defaultValues: {
       start: null,
       firstDeadline: null,
@@ -26,36 +31,35 @@ function App() {
 
   const [posts, setPosts] = useState([]);
 
-  const onSubmit = ({ start, firstDeadline, lastDeadline, name}) => {
-    setPosts([
-      ...posts,
-      {
-        name,
-        start,
-        firstDeadline,
-        lastDeadline
-      },
-    ])
+  const onSubmit = ({ start, firstDeadline, lastDeadline, name }) => {
+    setPosts(
+      [
+        ...posts,
+        {
+          name,
+          start,
+          firstDeadline,
+          lastDeadline,
+        },
+      ].sort((a, b) => a.start.toMillis() - b.start.toMillis())
+    );
   };
 
   useEffect(() => {
-    reset()
+    reset();
   }, [isSubmitSuccessful, reset]);
 
   const removePost = (name) => {
-    setPosts(posts.filter(p => p.name !== name))
-  }
-  const sortPosts = () => {
-    setPosts([...posts].sort((a,b) => a.start.ts - b.start.ts))
-  }
+    setPosts(posts.filter((p) => p.name !== name));
+  };
 
   return (
     <div className="App">
       <LocalizationProvider dateAdapter={AdapterLuxon}>
-        <Container maxWidth='md'>
+        <Container maxWidth="md">
           <Box mt={3}>
             <Typography variant="h4" align="center" mb={3}>
-              Term tracker
+              Deadline tracker
             </Typography>
 
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -64,7 +68,7 @@ function App() {
                 label="Tracking name"
                 sx={{ marginBottom: 3 }}
                 {...register("name", {
-                  required: 'This field is required'
+                  required: "This field is required",
                 })}
               ></TextField>
 
@@ -114,7 +118,7 @@ function App() {
             </form>
           </Box>
           <Box>
-            {posts.map(({name, start, firstDeadline, lastDeadline}) => {
+            {posts.map(({ name, start, firstDeadline, lastDeadline }) => {
               return (
                 <MyProgressBar
                   name={name}
@@ -127,11 +131,6 @@ function App() {
               );
             })}
           </Box>
-          { posts.length > 1
-            ? <Button variant="contained" sx={{marginTop: 3}} onClick={sortPosts}>Sort by start date</Button>
-            : undefined
-          }
-          
         </Container>
       </LocalizationProvider>
     </div>
