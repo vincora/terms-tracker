@@ -9,7 +9,7 @@
   position: relative;
 
   &_exp{
-    margin-top: 7px;
+    margin-top: 15px;
   }
 
   &__now {
@@ -25,13 +25,24 @@
     left: 0;
     top: 0;
     bottom: 0;
-    z-index: 1;
-    border-right: 2px solid #ccc;
+    &::after{
+      content: '';
+      position: absolute;
+      display: block;
+      right: 0;
+      top: -5px;
+      bottom: -5px;
+      width: 3px;
+      height: 18px;
+      background-color: #fff;
+      border: 1px solid #000;
+      z-index: 2;
+    }
   }
   &__firstDeadlineLabel{
     position: absolute;
     right: 0;
-    top: -20px;
+    top: -25px;
     transform: translateX(50%)
   }
   &__wrapper{

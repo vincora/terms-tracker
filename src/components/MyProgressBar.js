@@ -1,6 +1,14 @@
-import { Stack, Typography, IconButton } from "@mui/material";
+import {
+  Stack,
+  Typography,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import { DeleteOutlined } from "@mui/icons-material";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DateTime } from "luxon";
 import styles from "./MyProgressBar.module.scss";
 import cn from "classnames";
@@ -23,6 +31,12 @@ const MyPost = ({ name, start, firstDeadline, lastDeadline, remove }) => {
     setTimeout(() => (ref.current.style.width = `${today}%`), 0);
   }, [today]);
 
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className={styles.progress__wrapper}>
       <Stack
@@ -33,9 +47,31 @@ const MyPost = ({ name, start, firstDeadline, lastDeadline, remove }) => {
         <Typography variant="h6" sx={{ fontWeight: 400 }}>
           {name}
         </Typography>
-        <IconButton aria-label="delete" onClick={() => remove(name)}>
+        <IconButton
+          aria-label="delete"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
           <DeleteOutlined />
         </IconButton>
+        <Dialog open={open} aria-labelledby="alert-dialog-title">
+          <DialogTitle id="alert-dialog-title">
+            {"Do you want to delete this item?"}
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={handleClose}>No</Button>
+            <Button
+              onClick={() => {
+                remove(name);
+                handleClose();
+              }}
+              autoFocus
+            >
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Stack>
       <div
         className={cn(styles.progress, { [styles.progress_exp]: lastDeadline })}

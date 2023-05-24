@@ -5,6 +5,9 @@ import {
   Stack,
   TextField,
   Box,
+  Divider,
+  MenuItem,
+  FormControl,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -12,6 +15,7 @@ import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import { useForm } from "react-hook-form";
 import MyDatePicker from "./components/MyDatePicker";
 import MyProgressBar from "./components/MyProgressBar";
+import { DateTime } from "luxon";
 
 function App() {
   const {
@@ -29,7 +33,15 @@ function App() {
     },
   });
 
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(() => {
+    const arr = JSON.parse(localStorage.getItem("posts"));
+    return arr.map((i) => ({
+      name: i.name,
+      start: DateTime.fromISO(i.start),
+      firstDeadline: DateTime.fromISO(i.firstDeadline),
+      lastDeadline: i.lastDeadline ? DateTime.fromISO(i.lastDeadline) : null,
+    }));
+  });
 
   const onSubmit = ({ start, firstDeadline, lastDeadline, name }) => {
     setPosts(
@@ -41,9 +53,13 @@ function App() {
           firstDeadline,
           lastDeadline,
         },
-      ].sort((a, b) => a.start.toMillis() - b.start.toMillis())
+      ]
     );
   };
+
+  useEffect(() => {
+    localStorage.setItem("posts", JSON.stringify(posts));
+  }, [posts]);
 
   useEffect(() => {
     reset();
@@ -52,6 +68,22 @@ function App() {
   const removePost = (name) => {
     setPosts(posts.filter((p) => p.name !== name));
   };
+
+  const [selectedSort, setSelectedSort] = useState("start");
+
+  const handleChangeSort = (e) => {
+    setSelectedSort(e.target.value);
+  };
+
+  useEffect(() => {
+    if (posts.length > 1) {
+      setPosts(
+        [...posts].sort(
+          (a, b) => a[selectedSort].toMillis() - b[selectedSort].toMillis()
+        )
+      );
+    }
+  }, [selectedSort, posts]);
 
   return (
     <div className="App">
@@ -113,11 +145,26 @@ function App() {
                 />
               </Stack>
               <Button variant="contained" type="submit" sx={{ marginBlock: 3 }}>
-                Submit
+                Add new deadline
               </Button>
             </form>
           </Box>
-          <Box>
+          <Divider />
+          <FormControl variant="standard" sx={{ mt: 2, minWidth: 120 }}>
+            <TextField
+              id="select"
+              label="sort by"
+              select
+              size="small"
+              value={selectedSort}
+              onChange={handleChangeSort}
+            >
+              <MenuItem value="start">start date</MenuItem>
+              <MenuItem value="firstDeadline">first deadline</MenuItem>
+              <MenuItem value="lastDeadline">last deadline</MenuItem>
+            </TextField>
+          </FormControl>
+          <Box mt={3}>
             {posts.map(({ name, start, firstDeadline, lastDeadline }) => {
               return (
                 <MyProgressBar
