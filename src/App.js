@@ -9,7 +9,7 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import { useForm } from "react-hook-form";
@@ -44,17 +44,15 @@ function App() {
   });
 
   const onSubmit = ({ start, firstDeadline, lastDeadline, name }) => {
-    setPosts(
-      [
-        ...posts,
-        {
-          name,
-          start,
-          firstDeadline,
-          lastDeadline,
-        },
-      ]
-    );
+    setPosts([
+      ...posts,
+      {
+        name,
+        start,
+        firstDeadline,
+        lastDeadline,
+      },
+    ]);
   };
 
   useEffect(() => {
@@ -75,14 +73,24 @@ function App() {
     setSelectedSort(e.target.value);
   };
 
-  useEffect(() => {
-    if (posts.length > 1) {
-      setPosts(
-        [...posts].sort(
-          (a, b) => a[selectedSort].toMillis() - b[selectedSort].toMillis()
-        )
-      );
+  const selectedSortFunc = (item, selectedSort) => {
+    if (selectedSort === "start") {
+      return item.start;
     }
+
+    if (selectedSort === "lastDeadline" && item.lastDeadline) {
+      return item.lastDeadline;
+    }
+
+    return item.firstDeadline;
+  };
+
+  const sortedPosts = useMemo(() => {
+    return [...posts].sort(
+      (a, b) =>
+        selectedSortFunc(a, selectedSort).toMillis() -
+        selectedSortFunc(b, selectedSort).toMillis()
+    );
   }, [selectedSort, posts]);
 
   return (
@@ -150,22 +158,25 @@ function App() {
             </form>
           </Box>
           <Divider />
-          <FormControl variant="standard" sx={{ mt: 2, minWidth: 120 }}>
-            <TextField
-              id="select"
-              label="sort by"
-              select
-              size="small"
-              value={selectedSort}
-              onChange={handleChangeSort}
-            >
-              <MenuItem value="start">start date</MenuItem>
-              <MenuItem value="firstDeadline">first deadline</MenuItem>
-              <MenuItem value="lastDeadline">last deadline</MenuItem>
-            </TextField>
-          </FormControl>
-          <Box mt={3}>
-            {posts.map(({ name, start, firstDeadline, lastDeadline }) => {
+          {posts.length > 1 ? (
+            <FormControl variant="standard" sx={{ mt: 2, minWidth: 120 }}>
+              <TextField
+                id="select"
+                label="sort by"
+                select
+                size="small"
+                value={selectedSort}
+                onChange={handleChangeSort}
+              >
+                <MenuItem value="start">start date</MenuItem>
+                <MenuItem value="firstDeadline">first deadline</MenuItem>
+                <MenuItem value="lastDeadline">last deadline</MenuItem>
+              </TextField>
+            </FormControl>
+          ) : undefined}
+
+          <Box mt={2}>
+            {sortedPosts.map(({ name, start, firstDeadline, lastDeadline }) => {
               return (
                 <MyProgressBar
                   name={name}
