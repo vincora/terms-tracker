@@ -92,8 +92,8 @@ const MyPost = ({ name, start, firstDeadline, lastDeadline, remove }) => {
         ) : undefined}
       </div>
       <Stack flexDirection="row" justifyContent="space-between">
-        <Typography variant="body2">{start.toFormat(dateFormat)}</Typography>
-        <Typography variant="body2">
+        <Typography variant="body2" mt={1}>{start.toFormat(dateFormat)}</Typography>
+        <Typography variant="body2" mt={1}>
           {(lastDeadline ? lastDeadline : firstDeadline).toFormat(dateFormat)}
         </Typography>
       </Stack>

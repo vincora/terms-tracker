@@ -175,7 +175,7 @@ function App() {
             </FormControl>
           ) : undefined}
 
-          <Box mt={2}>
+          <Box mt={2} mb={3}>
             {sortedPosts.map(({ name, start, firstDeadline, lastDeadline }) => {
               return (
                 <MyProgressBar
