@@ -34,8 +34,13 @@ function App() {
   });
 
   const [posts, setPosts] = useState(() => {
-    const arr = JSON.parse(localStorage.getItem("posts"));
-    return arr.map((i) => ({
+    let arr;
+    
+    try {
+      arr = JSON.parse(localStorage.getItem("posts"));
+    } catch {}
+
+    return (Array.isArray(arr) ? arr : []).map((i) => ({
       name: i.name,
       start: DateTime.fromISO(i.start),
       firstDeadline: DateTime.fromISO(i.firstDeadline),
