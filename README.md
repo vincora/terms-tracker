@@ -8,10 +8,28 @@ Or you only know the approximate delivery time of your parcel (between two dates
 
 ## Table of Contents
 
-- [Features](#features)
+- [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
+
+---
+
+## Getting Started
+
+To get started with the **Shopping Assistant** app, follow these steps:
+
+1. Clone the repository to your local machine:
+   git clone https://github.com/vincora/terms-tracker.git
+
+2. Navigate to the project directory:
+   cd terms-tracker
+
+3. Install the necessary dependencies:
+   npm install
+
+4. Start the development server:
+   npm start
 
 ---
 
