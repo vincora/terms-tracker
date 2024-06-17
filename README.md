@@ -5,48 +5,19 @@ This is a web application designed to track and visualize deadlines. It allows u
 
 For example, you have several work projects at once that need to be completed by different deadlines and you want to see, how much time you have left for each of them. Or you only know the approximate delivery time of your parcel (between two dates) and want to understand, if delivery is still on time or you should contact support service.
 
-## Table of Contents
-
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-
 ---
 
 ## Features
 
-- **Task Addition:** Users can add a new deadline with a title.
-- **Start Date Selection:** Choose the start date using a calendar or input manually.
-- **First Deadline Setup:** Set the first estimated deadline.
-- **Second Deadline Setup:** Optionally set a second final deadline.
+- **Deadline Creation:** Users can add one or multiple deadlines with a title.
 - **Progress Visualization:** Visualizes progress with a visual line (progress bar) showing elapsed time from start to end.
 - **Sorting Deadlines:** Users can sort deadlines by selecting a sorting method from a dropdown list: by start date, by first deadline, or by last deadline.
 
 ---
 
-## Getting Started
-
-To get started with the **Deadline trackert** app, follow these steps:
-
-1. Clone the repository to your local machine:
-   git clone https://github.com/vincora/terms-tracker.git
-
-2. Navigate to the project directory:
-   cd terms-tracker
-
-3. Install the necessary dependencies:
-   npm install
-
-4. Start the development server:
-   npm start
-
----
-
 ## Usage
 
-1. **Adding a Deadline**:
+1. **Adding Deadline**:
     - Click on the "Tracking name" input to create a new deadline tracker.
     - Click 'start' date-picker to type or choose starting point.
     - Click 'first deadline' date-picker to set the first deadline. If you only need one endpoint, skip the nest step.
@@ -68,16 +39,4 @@ To get started with the **Deadline trackert** app, follow these steps:
 - [React](https://reactjs.org/)
 - [MUI](https://mui.com/)
 - [React Hook Form](https://react-hook-form.com/)
-
----
-
-## Contributing
-
-If you'd like to contribute to this project, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and commit them.
-4. Push to your forked repository.
-5. Create a pull request to the original repository.
 
