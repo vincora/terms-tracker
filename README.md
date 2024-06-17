@@ -12,7 +12,6 @@ Or you only know the approximate delivery time of your parcel (between two dates
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
 
 ---
 
