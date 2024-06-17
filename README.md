@@ -1,13 +1,13 @@
 
 # Deadline tracker app
 
-This is a web application designed to track and visualize your deadlines. You can set up multiple deadlines and see how close today's date is to the endpoint for each.
-For example, you have several work projects at once that need to be completed by different deadlines and you want to see, how much time you have left for each of them.
-Or you only know the approximate delivery time of your parcel (between two dates) and want to understand, if delivery is still on time or you should contact support service.
+This is a web application designed to track and visualize deadlines. It allows users to set a start date, a first estimated deadline, and an optional second final deadline. The app visualizes progress between these dates, showing how much time has passed since the start date to the end. You can set up multiple deadlines and see how close today's date is to the endpoint for each.
 
+For example, you have several work projects at once that need to be completed by different deadlines and you want to see, how much time you have left for each of them. Or you only know the approximate delivery time of your parcel (between two dates) and want to understand, if delivery is still on time or you should contact support service.
 
 ## Table of Contents
 
+- [Features](#features)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
@@ -15,9 +15,20 @@ Or you only know the approximate delivery time of your parcel (between two dates
 
 ---
 
+## Features
+
+- **Task Addition:** Users can add a new deadline with a title.
+- **Start Date Selection:** Choose the start date using a calendar or input manually.
+- **First Deadline Setup:** Set the first estimated deadline.
+- **Second Deadline Setup:** Optionally set a second final deadline.
+- **Progress Visualization:** Visualizes progress with a visual line (progress bar) showing elapsed time from start to end.
+- **Sorting Deadlines:** Users can sort deadlines by selecting a sorting method from a dropdown list: by start date, by first deadline, or by last deadline.
+
+---
+
 ## Getting Started
 
-To get started with the **Shopping Assistant** app, follow these steps:
+To get started with the **Deadline trackert** app, follow these steps:
 
 1. Clone the repository to your local machine:
    git clone https://github.com/vincora/terms-tracker.git
@@ -43,14 +54,11 @@ To get started with the **Shopping Assistant** app, follow these steps:
     - Click 'add new deadline' button to finish creating deadline tracker.
     - You can add many deadline trackers to compare them.
 
-2. **Deadline Visualisation**:
-    - The app will display a progress bar for each deadline
-
-3. **Sorting**:
+2. **Sorting**:
     - Select the sorting method from a drop-down list.
     - All trackers will be automatically sorted by selected method.
     
-4. **Deleting Categories and Items**:
+3. **Deleting Categories and Items**:
     - Click on the trash icon next to a tracker to delete it.
 
 ---
@@ -72,3 +80,4 @@ If you'd like to contribute to this project, please follow these steps:
 3. Make your changes and commit them.
 4. Push to your forked repository.
 5. Create a pull request to the original repository.
+
