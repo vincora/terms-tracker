@@ -2,7 +2,7 @@
 
 This is a web application designed to track and visualize deadlines. It allows users to set a start date, a first estimated deadline, and an optional second final deadline. The app visualizes progress between these dates, showing how much time has passed since the start date to the end. You can set up multiple deadlines and see how close today's date is to the endpoint for each.
 
-For example, you have several work projects at once that need to be completed by different deadlines and you want to see, how much time you have left for each of them. Or you only know the approximate delivery time of your parcel (between two dates) and want to understand, if delivery is still on time or you should contact support service.
+For example, you have several work projects at once that need to be completed by different deadlines and you want to see, how much time you have left for each of them. Or you have agreements with several contractors for completing work. Each contractor sets deadlines within specific date ranges. To maintain control over the situation, you input the deadlines announced by the contractors into the application.
 
 ---
 
@@ -26,9 +26,12 @@ For example, you have several work projects at once that need to be completed by
    - You can add many deadline trackers to compare them.
 
 2. **Sorting**:
+
    - Select the sorting method from a drop-down list.
    - All trackers will be automatically sorted by selected method.
+
 3. **Deleting Categories and Items**:
+
    - Click on the trash icon next to a tracker to delete it.
 
 ---
